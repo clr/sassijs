@@ -1,0 +1,3 @@
+  // Detect if 'pattern' is a String.
+  if( ( typeof( pattern ) == 'string' ) || ( ( typeof( pattern ) == 'object' ) && ( pattern.constructor.toString().match( /string/i ) != null ) ) ) {
+ ...

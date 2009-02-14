@@ -1,0 +1,3 @@
+The library setup is virtually identical to the HAML / SASS layout, with exceptions for obvious refactoring opportunities, such as moving the 'shared' library out of 'haml/'
+
+
