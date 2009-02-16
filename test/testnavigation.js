@@ -2,8 +2,10 @@ $( function(){
 
   $( [
     '',
-    'shared',
+    'helper',
     'string-scanner',
+    'pepper',
+    'sassij/error',
     'sassij/engine',
     'sassij/tree/node',
     'sassij/tree/attr-node'

@@ -6,37 +6,22 @@
     <script language="javascript" src="testrunner.js" type="text/javascript"></script>
     <script language="javascript" src="testnavigation.js" type="text/javascript"></script>
     <link media="screen" href="testsuite.css" type="text/css" rel="stylesheet"/>    
-
-    <script language="javascript" src="../lib/sassij.js" type="text/javascript"></script>
-    <script language="javascript" src="../lib/shared.js" type="text/javascript"></script>
+    <script language="javascript" src="testsetup.js" type="text/javascript"></script>
   </head>
   <body>
     <script language="javascript" type="text/javascript">
 
-  module( "Hamlij Shared Tests");
+  module( "Pepper Tests");
   sassij = new Sassij();
-  
-  test( "human_indentation() should say the indention type plus ' was' or nothing if no tab or space", function(){
-    equals( sassij.shared.human_indentation( " ", false ), "1 space" );
-    equals( sassij.shared.human_indentation( "\t", true ), "1 tab was" );
-    equals( sassij.shared.human_indentation( "\t  ", true ), "'\t  ' was" );
-  });
-  
-  test( "human_indentation() should match the verb case with the length of spaces", function(){
-    equals( sassij.shared.human_indentation( "  ", true ), "2 spaces were" );
-    equals( sassij.shared.human_indentation( "\t\t", true ), "2 tabs were" );
-  });
-  
+    
   test( "String helper toCamelCase()", function(){
     equals( "camel case".toCamelCase(), "CamelCase" );
     equals( "camEl_ Case ".toCamelCase(), "CamElCase" );
   });
   
-
-
     </script>
 
-    <h1>Shared Tests</h1>
+    <h1>Pepper Tests</h1>
     <h2 id="banner">
       <select id='test_select'></select>
     </h2>
