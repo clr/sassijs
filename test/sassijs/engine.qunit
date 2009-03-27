@@ -103,11 +103,21 @@
   
   // Test helper.
   render = function( text ){
-    new SassijEngine( text ).render();
+    return new SassijsEngine( text ).render();
+  }  
+
+  beforeEach = function(){
+    testString = "something";
+    sassijsEngine = new sassijsEngine( testString );
+    basicSassijs = new SassijsFile( '../templates/basic.sass', false );
   }
+
+  module( "Sassijs Engine Tests");
   
-  module( "Sassij Engine Tests");
-  
+  test( "should say test", function(){
+    equals( render( "anything" ), "test" );
+  });
+
   test( "should show the correct Exception when invalid syntax is supplied to the renderer", function(){
     $( EXCEPTION_MAP ).each( function( key, value ) {
       try {
@@ -127,7 +137,7 @@
 
     </script>
 
-    <h1>My Foo Tests</h1>
+    <h1></h1>
     <h2 id="banner">
       <select id='test_select'></select>
     </h2>

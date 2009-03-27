@@ -1,12 +1,17 @@
 libraries = function(){
   return [
     'pepper',
-    'sassij',
+    'sassijs',
     'helper',
     'string-scanner',
-    'sassij/error',
-    'sassij/engine',
-    'sassij/tree/node'
+    'sassijs/error',
+    'sassijs/environment',
+    'sassijs/tree/node',
+    'sassijs/script/string',
+    'sassijs/engine',
+    'sassijs/file',
+    'sassijs/line',
+    'sassijs/tree'
   ];
 };
 
@@ -22,3 +27,19 @@ loadJavascriptLibrary = function( root ){
 var root = document.location.toString().split( "\/test", 1 )[0];
 loadJavascriptLibrary( root );
 
+$( function(){
+
+  $( [ '' ].concat( libraries( root ) ) ).each( function( i, test ){ 
+    var option = $( '<option>'+test+'</option>' );
+    $( '#test_select' ).append( option );
+    $( option ).data( 'url', document.location.toString().split( "sassijs\/test", 1 )[0] + 'sassijs/test/' + test + '.qunit' );
+  });
+
+  $( '#test_select' ).change( function(){
+    var url = $( $( '#test_select option:selected' )[0] ).data( 'url' );
+    if( url.length > 0 ){
+      document.location = url;
+    }
+  });
+
+})

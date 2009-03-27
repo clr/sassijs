@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+  <head>
+    <title>Sassijs Tests</title>    
+    <script language="javascript" src="../jquery-1.3.1.min.js" type="text/javascript"></script>
+    <script language="javascript" src="../testrunner.js" type="text/javascript"></script>
+    <script language="javascript" src="../testnavigation.js" type="text/javascript"></script>
+    <link media="screen" href="../testsuite.css" type="text/css" rel="stylesheet"/>    
+    <script language="javascript" src="../testsetup.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <script language="javascript" type="text/javascript">
+
+  module( "Sassijs Tree Tests");
+  
+  testTemplate = function(){
+    return $( '#test-template' ).html();
+  }
+  
+  test( "should take a string and find the right kind of tab", function(){
+    sassijsTree = new SassijsTree( '\t' );
+    equals( sassijsTree.getTab(), '\t' );
+    sassijsTree = new SassijsTree( ' ' );
+    equals( sassijsTree.getTab(), ' ' );
+    sassijsTree = new SassijsTree( '  ' );
+    equals( sassijsTree.getTab(), '  ' );
+    sassijsTree = new SassijsTree( '\n\n\t\t' );
+    equals( sassijsTree.getTab(), '\t\t' );
+    sassijsTree = new SassijsTree( '\n\nsome junk\n\t\tsome other junk\nsome junk again\n\t\t\t\tthen some other junk' );
+    equals( sassijsTree.getTab(), '\t\t' );
+  });
+
+  test( "should load the basic file and parse the individual lines", function(){
+    basicSassijs = new SassijsFile( '../templates/basic.sass', false );
+    equals( basicSassijs.getTemplate(), testTemplate() );
+    tree = basicSassijs.tree;
+    equals( tree.getLines()[0].getRule(), '' );
+    equals( tree.getLines()[2].getRule(), 'body' );
+    equals( tree.getLines()[13].getRule(), ':color blue' );
+    equals( tree.getLines()[22].getRule(), ':background brown' );
+  });
+
+  test( "should load the basic file and turn it into a series of nested nodes", function(){
+    basicSassijs = new SassijsFile( '../templates/basic.sass', false );
+    tree = basicSassijs.tree.root;
+    equals( tree.getChildren()[0].getLine().getRule(), "body" );
+    equals( tree.getChildren()[0].getChildren()[0].getLine().getRule(), ":font Arial" );
+    equals( tree.getChildren()[0].getChildren()[1].getLine().getRule(), ":background blue" );
+    equals( tree.getChildren()[1].getLine().getRule(), "#page" );
+    equals( tree.getChildren()[1].getChildren()[0].getLine().getRule(), ":width 700px" );
+    equals( tree.getChildren()[1].getChildren()[1].getLine().getRule(), ":height 100" );
+    equals( tree.getChildren()[1].getChildren()[2].getLine().getRule(), "#header" );
+    equals( tree.getChildren()[1].getChildren()[2].getChildren()[0].getLine().getRule(), ":height 300px" );
+    equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getLine().getRule(), "h1" );
+    equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getChildren()[0].getLine().getRule(), ":font-size 50px" );
+    equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getChildren()[1].getLine().getRule(), ":color     blue" );
+    equals( tree.getChildren()[2].getLine().getRule(), "#content.user.show" );
+    equals( tree.getChildren()[2].getChildren()[0].getLine().getRule(), "#container.top" );
+    equals( tree.getChildren()[2].getChildren()[0].getChildren()[0].getLine().getRule(), "#column.left" );
+    equals( tree.getChildren()[2].getChildren()[0].getChildren()[0].getChildren()[0].getLine().getRule(), ":width 100px" );
+    equals( tree.getChildren()[2].getChildren()[0].getChildren()[1].getLine().getRule(), "#column.right" );
+    equals( tree.getChildren()[2].getChildren()[0].getChildren()[1].getChildren()[0].getLine().getRule(), ":width 600px" );
+    equals( tree.getChildren()[2].getChildren()[1].getLine().getRule(), "#container.bottom" );
+    equals( tree.getChildren()[2].getChildren()[1].getChildren()[0].getLine().getRule(), ":background brown" );
+  });
+
+    </script>
+    <h1></h1>
+    <h2 id="banner">
+      <select id='test_select'></select>
+    </h2>
+    <ol id="tests"></ol>
+    <div id="results"></div>
+    <div id="main"></div>
+    <div id="test-template" style="display:none">
+
+body  
+  :font Arial
+  :background blue
+
+#page
+  :width 700px
+  :height 100
+  #header
+    :height 300px
+    h1
+      :font-size 50px
+      :color     blue
+
+#content.user.show
+  #container.top
+    #column.left
+      :width 100px
+    #column.right
+      :width 600px
+  #container.bottom
+    :background brown
+</div>
+
+  </body>
+</html>

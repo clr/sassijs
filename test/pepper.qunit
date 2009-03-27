@@ -17,6 +17,16 @@
   test( "String helper toCamelCase()", function(){
     equals( "camel case".toCamelCase(), "CamelCase" );
     equals( "camEl_ Case ".toCamelCase(), "CamElCase" );
+    equals( "camel1case".toCamelCase(), "Camel1case" );
+  });
+  
+  test( "Psuedo-classes should be properly adding instance variables, not class variables", function(){
+    dummySassij1 = new DummyPepperClass();
+    dummySassij1.setDummyAttr( 'test1' );
+    dummySassij2 = new DummyPepperClass();
+    dummySassij2.setDummyAttr( 'test2' );
+    equals( dummySassij1.getDummyAttr(), 'test1' );
+    equals( dummySassij2.getDummyAttr(), 'test2' );
   });
   
     </script>

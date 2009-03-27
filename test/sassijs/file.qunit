@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+  <head>
+    <title>Sassijs Tests</title>    
+    <script language="javascript" src="../jquery-1.3.1.min.js" type="text/javascript"></script>
+    <script language="javascript" src="../testrunner.js" type="text/javascript"></script>
+    <script language="javascript" src="../testnavigation.js" type="text/javascript"></script>
+    <link media="screen" href="../testsuite.css" type="text/css" rel="stylesheet"/>    
+    <script language="javascript" src="../testsetup.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <script language="javascript" type="text/javascript">
+
+  module( "Sassijs File Tests");
+  
+  testTemplate = function(){
+    return $( '#test-template' ).html();
+  }
+  
+  test( "should be able to load an external file '../temlates/basic.sass'", function(){
+    sassijs = new SassijsFile( '../templates/basic.sass', false );
+    equals( sassijs.isLoaded(), true );
+    equals( sassijs.getTemplate(), testTemplate() );
+  });
+
+    </script>
+    <h1></h1>
+    <h2 id="banner">
+      <select id='test_select'></select>
+    </h2>
+    <ol id="tests"></ol>
+    <div id="results"></div>
+    <div id="main"></div>
+    <div id="test-template" style="display:none">
+
+body  
+  :font Arial
+  :background blue
+
+#page
+  :width 700px
+  :height 100
+  #header
+    :height 300px
+    h1
+      :font-size 50px
+      :color     blue
+
+#content.user.show
+  #container.top
+    #column.left
+      :width 100px
+    #column.right
+      :width 600px
+  #container.bottom
+    :background brown
+</div>
+
+  </body>
+</html>

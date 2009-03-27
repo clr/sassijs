@@ -15,11 +15,11 @@
   module( "Tree Node Tests" );
   
   beforeEach = function(){
-    testNode = new SassijTreeNode();
-    childNode = new SassijTreeNode();
-    childNode1 = new SassijTreeNode();
-    childNode2 = new SassijTreeNode();
-    childNode3 = new SassijTreeNode();
+    testNode = new SassijsTreeNode();
+    childNode = new SassijsTreeNode();
+    childNode1 = new SassijsTreeNode();
+    childNode2 = new SassijsTreeNode();
+    childNode3 = new SassijsTreeNode();
     threeNewChildren = [ childNode1, childNode2, childNode3 ];
   }
   
@@ -58,7 +58,7 @@ SASS
 
   test( "SassijTreeNode should be able to accept a new child", function(){
     beforeEach();
-    testNode.addChild( childNode );
+    testNode.appendChild( childNode );
     equals( testNode.getChildren()[0], childNode );
   });
 
@@ -74,6 +74,13 @@ SASS
     equals( testNode.lastChild(), threeNewChildren[2] );
   });
 
+/*
+  test( "SassijTreeNode last child should be able to find its parent", function(){
+    beforeEach();
+    testNode.setChildren( threeNewChildren );
+    equals( threeNewChildren[2].getParent(), testNode );
+  });
+*/
   
     </script>
 
