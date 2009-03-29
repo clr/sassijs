@@ -71,7 +71,7 @@ SASS
   test( "SassijTreeNode should be able to return just the last child", function(){
     beforeEach();
     testNode.setChildren( threeNewChildren );
-    equals( testNode.lastChild(), threeNewChildren[2] );
+    equals( testNode.getLastChild(), threeNewChildren[2] );
   });
 
 /*

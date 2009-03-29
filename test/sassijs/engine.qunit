@@ -10,130 +10,18 @@
   </head>
   <body>
     <script language="javascript" type="text/javascript">
-
-  /*
-   * A map of erroneous Sass documents to the error messages they should produce.
-   * The error messages may be arrays;
-   * if so, the second element should be the line number that should be reported for the error.
-   * If this isn't provided, the tests will assume the line number should be the last line of the document.
-   */
-  EXCEPTION_MAP = {
-    "!a = 1 + ": 'Expected expression, was end of text.',
-    "!a = 1 + 2 +": 'Expected expression, was end of text.',
-    "!a = 1 + 2 + %": 'Expected expression, was mod token.',
-    "!a = foo(\"bar\"": 'Expected rparen token, was end of text.',
-    "!a = 1 }": 'Unexpected right_bracket token.',
-    "!a = 1 }foo\"": 'Unexpected right_bracket token.',
-    "!a = #aaa - \"a\"": 'Undefined operation: "#aaaaaa minus a".',
-    "!a = #aaa / \"a\"": 'Undefined operation: "#aaaaaa div a".',
-    "!a = #aaa * \"a\"": 'Undefined operation: "#aaaaaa times a".',
-    "!a = #aaa % \"a\"": 'Undefined operation: "#aaaaaa mod a".',
-    "!a = 1 - \"a\"": 'Undefined operation: "1 minus a".',
-    "!a = 1 * \"a\"": 'Undefined operation: "1 times a".',
-    "!a = 1 / \"a\"": 'Undefined operation: "1 div a".',
-    "!a = 1 % \"a\"": 'Undefined operation: "1 mod a".',
-    ":": 'Invalid attribute: ":".',
-    ": a": 'Invalid attribute: ": a".',
-    ":= a": 'Invalid attribute: ":= a".',
-    "a\n  :b": 'Invalid attribute: ":b ".',
-    "a\n  :b: c": 'Invalid attribute: ":b: c".',
-    "a\n  :b:c d": 'Invalid attribute: ":b:c d".',
-    "a\n  :b=c d": 'Invalid attribute: ":b=c d".',
-    "a\n  :b c;": 'Invalid attribute: ":b c;" (This isn\'t CSS!).',
-    "a\n  b : c": 'Invalid attribute: "b : c".',
-    "a\n  b=c: d": 'Invalid attribute: "b=c: d".',
-    ":a": 'Attributes aren\'t allowed at the root of a document.',
-    "!": 'Invalid variable: "!".',
-    "!a": 'Invalid variable: "!a".',
-    "! a": 'Invalid variable: "! a".',
-    "!a b": 'Invalid variable: "!a b".',
-    "!a = 1b + 2c": "Incompatible units: 'c' and 'b'.",
-    "a\n  :b= 1b * 2c": "2b*c isn't a valid CSS value.",
-    "a\n  :b= 1b % 2c": "Cannot modulo by a number with units: 2c.",
-    "!a = 2px + #ccc": "Cannot add a number with units (2px) to a color (#cccccc).",
-    "!a = #ccc + 2px": "Cannot add a number with units (2px) to a color (#cccccc).",
-    "& a\n  :b c": ["Base-level rules cannot contain the parent-selector-referencing character '&'.", 1],
-    "a\n  :b\n    c": "Illegal nesting: Only attributes may be nested beneath attributes.",
-    "a,\n  :b c": ["Rules can\'t end in commas.", 1],
-    "a,": "Rules can\'t end in commas.",
-    "a,\n!b = 1": ["Rules can\'t end in commas.", 1],
-    "!a = b\n  :c d\n": "Illegal nesting: Nothing may be nested beneath variable declarations.",
-    "@import foo.sass": "File to import not found or unreadable: foo.sass.",
-    "@import templates/basic\n  foo": "Illegal nesting: Nothing may be nested beneath import directives.",
-    "foo\n  @import templates/basic": "Import directives may only be used at the root of a document.",
-    '!foo = "bar" "baz" !': 'Syntax error in \'"bar" "baz" !\' at character 20.',
-    "=foo\n  :color red\n.bar\n  +bang": "Undefined mixin 'bang'.",
-    ".bar\n  =foo\n    :color red\n": ["Mixins may only be defined at the root of a document.", 2],
-    "=foo\n  :color red\n.bar\n  +foo\n    :color red": "Illegal nesting: Nothing may be nested beneath mixin directives.",
-    "    a\n  b: c": ["Indenting at the beginning of the document is illegal.", 1],
-    " \n   \n\t\n  a\n  b: c": ["Indenting at the beginning of the document is illegal.", 4],
-    "a\n  b: c\n b: c": ["Inconsistent indentation: 1 space was used for indentation, but the rest of the document was indented using 2 spaces.", 3],
-    "a\n  b: c\na\n b: c": ["Inconsistent indentation: 1 space was used for indentation, but the rest of the document was indented using 2 spaces.", 4],
-    "a\n\t\tb: c\n\tb: c": ["Inconsistent indentation: 1 tab was used for indentation, but the rest of the document was indented using 2 tabs.", 3],
-    "a\n  b: c\n   b: c": ["Inconsistent indentation: 3 spaces were used for indentation, but the rest of the document was indented using 2 spaces.", 3],
-    "a\n  b: c\n  a\n   d: e": ["Inconsistent indentation: 3 spaces were used for indentation, but the rest of the document was indented using 2 spaces.", 4],
-    "a\n  b: c\na\n    d: e": ["The line was indented 2 levels deeper than the previous line.", 4],
-    "a\n  b: c\n  a\n        d: e": ["The line was indented 3 levels deeper than the previous line.", 4],
-    "a\n \tb: c": ["Indentation can't use both tabs and spaces.", 2],
-    "=a(": 'Invalid mixin "a(".',
-    "=a(b)": 'Mixin argument "b" must begin with an exclamation point (!).',
-    "=a(,)": "Mixin arguments can't be empty.",
-    "=a(!)": "Mixin arguments can't be empty.",
-    "=a(!foo bar)": "Invalid variable \"!foo bar\".",
-    "=foo\n  bar: baz\n+foo": ["Attributes aren't allowed at the root of a document.", 2],
-    "a-\#{!b\n  c: d": ["Expected right_bracket token, was end of text.", 1],
-    "=a(!b = 1, !c)": "Required arguments must not follow optional arguments \"!c\".",
-    "=a(!b = 1)\n  :a= !b\ndiv\n  +a(1,2)": "Mixin a takes 1 argument but 2 were passed.",
-    "=a(!b)\n  :a= !b\ndiv\n  +a": "Mixin a is missing parameter !b.",
-    "@else\n  a\n    b: c": ["@else must come after @if.", 1],
-    "@if false\n@else foo": "Invalid else directive '@else foo': expected 'if <expr>'.",
-    "@if false\n@else if ": "Invalid else directive '@else if': expected 'if <expr>'.",
-    "a\n  !b = 12\nc\n  d = !b": 'Undefined variable: "!b".',
-    "=foo\n  !b = 12\nc\n  +foo\n  d = !b": 'Undefined variable: "!b".',
-    '@for !a from 1 to "foo"': '"foo" is not an integer.',
-    '@for !a from 1 to 1.232323': '1.232 is not an integer.',
-    '@if': "Invalid if directive '@if': expected expression.",
-    '@while': "Invalid while directive '@while': expected expression.",
-    '@debug': "Invalid debug directive '@debug': expected expression.",
-    // Regression tests
-    "a\n  b:\n    c\n    d": [ "Illegal nesting: Only attributes may be nested beneath attributes.", 3 ],
-    "& foo\n  bar: baz\n  blat: bang": [ "Base-level rules cannot contain the parent-selector-referencing character '&'.", 1 ],
-    "a\n  b: c\n& foo\n  bar: baz\n  blat: bang": [ "Base-level rules cannot contain the parent-selector-referencing character '&'.", 3 ],
+  
+  testCss = function(){
+    return $( '#test-css' ).html();
   }
   
-  // Test helper.
-  render = function( text ){
-    return new SassijsEngine( text ).render();
-  }  
-
-  beforeEach = function(){
-    testString = "something";
-    sassijsEngine = new sassijsEngine( testString );
+  // This assumes that SassijsFile and SassijsTree already work,
+  // which almost makes this a functional test.
+  test( "should take a SASS tree and render to CSS", function(){
     basicSassijs = new SassijsFile( '../templates/basic.sass', false );
-  }
-
-  module( "Sassijs Engine Tests");
-  
-  test( "should say test", function(){
-    equals( render( "anything" ), "test" );
+    sassijsEngine = new SassijsEngine( basicSassijs.tree );
+    equals( sassijsEngine.getCss(), testCss() );
   });
-
-  test( "should show the correct Exception when invalid syntax is supplied to the renderer", function(){
-    $( EXCEPTION_MAP ).each( function( key, value ) {
-      try {
-        render( key );
-        throw( "Error was not generated." );
-      } catch( error ) {
-        equals( error, value, "Line: " + key );
-      }
-    });
-  });
-  
-  test( "should render css import command", function(){
-    equals( render( "@import url(./fonts.css) screen" ), "@import url(./fonts.css) screen;" );
-    equals( render( "@import \"./fonts.css\" screen" ), "@import \"./fonts.css\" screen;" );
-  });
-
 
     </script>
 
@@ -144,6 +32,16 @@
     <ol id="tests"></ol>
     <div id="results"></div>
     <div id="main"></div>        
+    <div id="test-css" style="display:none">body { font: Arial; background: blue; }
+
+#page { width: 700px; height: 100; }
+#page #header { height: 300px; }
+#page #header h1 { font-size: 50px; color: blue; }
+
+#content.user.show #container.top #column.left { width: 100px; }
+#content.user.show #container.top #column.right { width: 600px; }
+#content.user.show #container.bottom { background: brown; }
+</div>
 
   </body>
 </html>

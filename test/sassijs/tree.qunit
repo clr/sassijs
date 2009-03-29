@@ -33,7 +33,7 @@
   test( "should load the basic file and parse the individual lines", function(){
     basicSassijs = new SassijsFile( '../templates/basic.sass', false );
     equals( basicSassijs.getTemplate(), testTemplate() );
-    tree = basicSassijs.tree;
+    tree = basicSassijs.getTree();
     equals( tree.getLines()[0].getRule(), '' );
     equals( tree.getLines()[2].getRule(), 'body' );
     equals( tree.getLines()[13].getRule(), ':color blue' );
@@ -42,7 +42,7 @@
 
   test( "should load the basic file and turn it into a series of nested nodes", function(){
     basicSassijs = new SassijsFile( '../templates/basic.sass', false );
-    tree = basicSassijs.tree.root;
+    tree = basicSassijs.getTree().getRoot();
     equals( tree.getChildren()[0].getLine().getRule(), "body" );
     equals( tree.getChildren()[0].getChildren()[0].getLine().getRule(), ":font Arial" );
     equals( tree.getChildren()[0].getChildren()[1].getLine().getRule(), ":background blue" );
@@ -53,7 +53,7 @@
     equals( tree.getChildren()[1].getChildren()[2].getChildren()[0].getLine().getRule(), ":height 300px" );
     equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getLine().getRule(), "h1" );
     equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getChildren()[0].getLine().getRule(), ":font-size 50px" );
-    equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getChildren()[1].getLine().getRule(), ":color     blue" );
+    equals( tree.getChildren()[1].getChildren()[2].getChildren()[1].getChildren()[1].getLine().getRule(), ":color blue" );
     equals( tree.getChildren()[2].getLine().getRule(), "#content.user.show" );
     equals( tree.getChildren()[2].getChildren()[0].getLine().getRule(), "#container.top" );
     equals( tree.getChildren()[2].getChildren()[0].getChildren()[0].getLine().getRule(), "#column.left" );

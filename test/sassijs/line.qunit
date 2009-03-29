@@ -31,6 +31,35 @@
     equals( sassijsLine.getLineNumber(), 27 );
   });
 
+  test( "SassijTreeLine Factory Pattern should correctly identify the Node Species", function(){
+    sassijsLine = new SassijsLine( ':color blue', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'attribute' );
+    sassijsLine = new SassijsLine( '/* Okay check this out', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'comment' );
+    sassijsLine = new SassijsLine( '// And also...', '  ', 15 );
+    equals( sassijsLine.determineNode(), null );
+    sassijsLine = new SassijsLine( '@import url(basic.css);', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'directive' );
+    sassijsLine = new SassijsLine( '=complex', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'mixinDefinition' );
+    sassijsLine = new SassijsLine( '+complex', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'mixinInclude' );
+    sassijsLine = new SassijsLine( 'a:link, a:visited', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'rule' );
+    sassijsLine = new SassijsLine( '!width = 10em + 20', '  ', 15 );
+    equals( sassijsLine.determineNode().getSpecies(), 'variable' );
+    // Who creates these nodes?
+    // sassijsLine = new SassijsLine( '', '  ', 15 );
+    // equals( sassijsLine.determineNode().getSpecies(), 'file' );
+    // sassijsLine = new SassijsLine( '', '  ', 15 );
+    // equals( sassijsLine.determineNode().getSpecies(), 'for' );
+    // sassijsLine = new SassijsLine( '', '  ', 15 );
+    // equals( sassijsLine.determineNode().getSpecies(), 'if' );
+    // sassijsLine = new SassijsLine( '', '  ', 15 );
+    // equals( sassijsLine.determineNode().getSpecies(), 'while' );
+  });
+          
+
     </script>
     <h1></h1>
     <h2 id="banner">
