@@ -18,9 +18,23 @@
     sassijsNode = sassijsLine.determineNode();
     equals( sassijsNode.getSpecies(), 'attribute' );
     equals( sassijsNode.getCss(), 'color: blue;' );
+    sassijsLine = new SassijsLine( '    :width   960px  ', '  ', 15 );
+    sassijsNode = sassijsLine.determineNode();
+    equals( sassijsNode.getSpecies(), 'attribute' );
+    equals( sassijsNode.getCss(), 'width: 960px;' );
+  });
+ 
+  test( "SassijTreeNodeAttribute with alternate syntax should render to CSS", function(){
+    sassijsLine = new SassijsLine( 'height: 75px', '  ', 15 );
+    sassijsNode = sassijsLine.determineNode();
+    equals( sassijsNode.getSpecies(), 'attribute' );
+    equals( sassijsNode.getCss(), 'height: 75px;' );
+    sassijsLine = new SassijsLine( '    width:   960px  ', '  ', 15 );
+    sassijsNode = sassijsLine.determineNode();
+    equals( sassijsNode.getSpecies(), 'attribute' );
+    equals( sassijsNode.getCss(), 'width: 960px;' );
   });
           
-
     </script>
     <h1></h1>
     <h2 id="banner">
