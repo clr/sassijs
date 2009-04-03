@@ -19,14 +19,14 @@
   
   test( "should take a string, tab, and line number and return a Line object", function(){
     sassijsLine = new SassijsLine( testLine(), '  ', 15 );
-    equals( sassijsLine.getRule(), ':color blue' );
+    equals( sassijsLine.getSyntax(), ':color blue' );
     equals( sassijsLine.getTabCount(), 3 );
     equals( sassijsLine.getLineNumber(), 15 );
   });
   
   test( "should take the same string, but a different tab, and line number and return a Line object", function(){
     sassijsLine = new SassijsLine( testLine(), '   ', 27 );
-    equals( sassijsLine.getRule(), ':color blue' );
+    equals( sassijsLine.getSyntax(), ':color blue' );
     equals( sassijsLine.getTabCount(), 2 );
     equals( sassijsLine.getLineNumber(), 27 );
   });

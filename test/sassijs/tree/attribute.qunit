@@ -13,6 +13,15 @@
 
   module( "Sassijs Attribute Node Tests");
  
+  test( "SassijTreeNodeAttribute should find parts", function(){
+    sassijsLine = new SassijsLine( ':color blue', '  ', 15 );
+    sassijsNode = sassijsLine.determineNode();
+    equals( sassijsNode.getSpecies(), 'attribute' );
+    equals( sassijsNode.getKey(), 'color' );
+    equals( sassijsNode.getValue(), 'blue' );
+    equals( sassijsNode.getCss(), 'color: blue;' );
+  });
+ 
   test( "SassijTreeNodeAttribute should render to CSS", function(){
     sassijsLine = new SassijsLine( ':color blue', '  ', 15 );
     sassijsNode = sassijsLine.determineNode();
