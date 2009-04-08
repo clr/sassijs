@@ -12,7 +12,7 @@
     <script language="javascript" type="text/javascript">
 
   module( "Pepper Tests");
-  sassij = new Sassij();
+  sassij = new Sassijs();
     
   test( "String helper toCamelCase()", function(){
     equals( "camel case".toCamelCase(), "CamelCase" );
@@ -27,6 +27,12 @@
     dummySassij2.setDummyAttr( 'test2' );
     equals( dummySassij1.getDummyAttr(), 'test1' );
     equals( dummySassij2.getDummyAttr(), 'test2' );
+  });
+  
+  test( "Array should have the hasElement() function", function(){
+    array = [ 'A', 'B', 'C', 'D', 'E' ];
+    equals( array.hasElement( 'A' ), true );
+    equals( array.hasElement( 'F' ), false );
   });
   
     </script>
