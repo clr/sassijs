@@ -1,7 +1,16 @@
-SassijExpressionTerm = function( string ){
+SassijsExpressionTerm = function( string ){
   this.term = string;
 };
 
+SassijsExpressionTerm.method( 'toUnit', function( endUnitType ){
+  switch( startUnitType ){
+    case 'px':
+      switch( endUnitType ){
+        case 'px':
+      }
+  }
+  unitType
+});
 /*
 module Sass::Script
   class String < Literal # :nodoc:

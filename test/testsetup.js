@@ -14,6 +14,7 @@ libraries = function(){
     'sassijs/tree/mixin-include',
     'sassijs/tree/rule',
     'sassijs/tree/variable',
+    'sassijs/expression/unit',
     'sassijs/expression',
     'sassijs/file',
     'sassijs/line',

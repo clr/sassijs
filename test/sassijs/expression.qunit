@@ -15,11 +15,11 @@
   
   test( "should find sub-expressions inside parenthesis for order-of-precedence", function(){
     sassijsExpression = new SassijsExpression( "=(10 + 15) + px" );
-    same( sassijsExpression.getSubExpression(), [ "=", "10 + 15", " + px" ] );
+    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + 15", " + px" ] );
     sassijsExpression = new SassijsExpression( "=(10 + ( 3 * 5 ) ) + px" );
-    same( sassijsExpression.getSubExpression(), [ "=", "10 + ( 3 * 5 ) ", " + px" ] );
+    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + ( 3 * 5 ) ", " + px" ] );
     sassijsExpression = new SassijsExpression( "=(10 + 3 ) * ( 10 - 5 ) + px" );
-    same( sassijsExpression.getSubExpression(), [ "=", "10 + 3 ", " * ( 10 - 5 ) + px" ] );
+    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + 3 ", " * ( 10 - 5 ) + px" ] );
   });
 /*
   test( "should take a string representation of an expression and evaluate it", function(){
