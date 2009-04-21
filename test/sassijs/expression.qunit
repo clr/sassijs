@@ -13,20 +13,11 @@
 
   module( "Sassijs Expression Tests");
   
-  test( "should find sub-expressions inside parenthesis for order-of-precedence", function(){
-    sassijsExpression = new SassijsExpression( "=(10 + 15) + px" );
-    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + 15", " + px" ] );
-    sassijsExpression = new SassijsExpression( "=(10 + ( 3 * 5 ) ) + px" );
-    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + ( 3 * 5 ) ", " + px" ] );
-    sassijsExpression = new SassijsExpression( "=(10 + 3 ) * ( 10 - 5 ) + px" );
-    same( sassijsExpression.getFirstPrecedentExpression(), [ "=", "10 + 3 ", " * ( 10 - 5 ) + px" ] );
+  test( "should evaluate a size expression", function(){
+    sassijsExpression = new SassijsExpression( "= 4in + 10cm / 5pc - 3mm * 12px + 7pt" );
+    equals( sassijsExpression.getExpression(), " 4in + 10cm / 5pc - 3mm * 12px + 7pt" );
+    equals( sassijsExpression.getValue(), "197.67716533pt" );
   });
-/*
-  test( "should take a string representation of an expression and evaluate it", function(){
-    sassijsExpression = new SassijsExpression( "=(10 + 15) + px" );
-    equals( sassijsExpression.getCss(), '35px' );
-  });
-*/  
     </script>
     <h1></h1>
     <h2 id="banner">

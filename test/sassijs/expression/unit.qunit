@@ -23,9 +23,10 @@
     equals( sassijsExpressionUnit.getSpecies( '22pt + ...' ), 'size' );
   });
 
-  test( "SassijsExpressionUnit shouldn't mess around, just convert everything to pts, then eval, then put back in original species", function(){
+  test( "SassijsExpressionUnit shouldn't mess around, just convert everything to pts", function(){
     sassijsExpressionUnit = new SassijsExpressionUnit();
-    equals( sassijsExpressionUnit.getNormalizedExpression( '12px + 13pts / ' ), 'size' );
+    equals( sassijsExpressionUnit.getNormalizedSize( '4pt + 10pt / 5pt - 3pt' ), '4 + 10 / 5 - 3' );
+    equals( sassijsExpressionUnit.getNormalizedSize( '4in + 10cm / 5pc - 3mm * 12px + 7pt' ), '288 + 283.464567 / 60 - 8.50393701 * 12 + 7' );
   });
 
           

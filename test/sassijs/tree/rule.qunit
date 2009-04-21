@@ -14,11 +14,43 @@
   module( "Sassijs Rule Node Tests");
  
   test( "SassijTreeNodeRule should render as-is", function(){
-    sassijsLine = new SassijsLine( '    #column.left', '  ', 15 );
-    sassijsNode = sassijsLine.determineNode();
-    equals( sassijsNode.getSpecies(), 'rule' );
-    equals( sassijsNode.getCss(), '#column.left' );
+    sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    // Need a child node to which the rule prepends.
+    sassijsLine2 = new SassijsLine( '', '  ', 16 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    equals( sassijsNode1.getSpecies(), 'rule' );
+    equals( sassijsNode1.getCss(), '#column.left' );
   });
+ 
+/*
+  test( "SassijTreeNodeRule should render subchild rules", function(){
+    sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    sassijsLine2 = new SassijsLine( ' span.selected ', '  ', 16 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    // Need a child node to which the rule prepends.
+    sassijsLine3 = new SassijsLine( '', '  ', 17 );
+    sassijsNode3 = sassijsLine3.determineNode();
+    sassijsNode2.appendChild( sassijsNode3 );
+    equals( sassijsNode1.getCss().slice( 0, 26 ), '#column.left span.selected' );
+  });
+ 
+  test( "SassijTreeNodeRule should render subchild attributes", function(){
+    sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    sassijsLine2 = new SassijsLine( ' :font-size 13px', '  ', 16 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    sassijsLine3 = new SassijsLine( '  :color purple', '  ', 17 );
+    sassijsNode3 = sassijsLine3.determineNode();
+    sassijsNode1.appendChild( sassijsNode3 );
+    equals( sassijsNode1.getCss(), '#column.left { font-size: 13px; color: purple }' );
+    
+  });
+*/
  
     </script>
     <h1></h1>

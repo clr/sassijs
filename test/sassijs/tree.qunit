@@ -17,6 +17,10 @@
     return $( '#test-template' ).html();
   }
   
+  testResult = function(){
+    return $( '#test-result' ).html();
+  }
+  
   test( "should take a string and find the right kind of tab", function(){
     sassijsTree = new SassijsTree( '\t' );
     equals( sassijsTree.getTab(), '\t' );
@@ -64,6 +68,12 @@
     equals( tree.getChildren()[2].getChildren()[1].getChildren()[0].getLine().getSyntax(), ":background brown" );
   });
 
+  test( "should render the nodes to CSS", function(){
+    basicSassijs = new SassijsFile( '../templates/basic.sass', false );
+    tree = basicSassijs.getTree().getRoot();
+    equals( tree.getCss().join( '\n' ), testResult() );
+  });
+
     </script>
     <h1></h1>
     <h2 id="banner">
@@ -96,6 +106,13 @@ body
   #container.bottom
     :background brown
 </div>
+    <div id="test-result" style="display:none">body { font: Arial; background: blue; }
+#page { width: 700px; height: 100; }
+#page #header { height: 300px; }
+#page #header h1 { font-size: 50px; color: blue; }
+#content.user.show #container.top #column.left { width: 100px; }
+#content.user.show #container.top #column.right { width: 600px; }
+#content.user.show #container.bottom { background: brown; }</div>
 
   </body>
 </html>

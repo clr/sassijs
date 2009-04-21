@@ -74,13 +74,43 @@ SASS
     equals( testNode.getLastChild(), threeNewChildren[2] );
   });
 
-/*
-  test( "SassijTreeNode last child should be able to find its parent", function(){
-    beforeEach();
-    testNode.setChildren( threeNewChildren );
-    equals( threeNewChildren[2].getParent(), testNode );
+  test( "SassijTreeNodeRule should render subchild attributes", function(){
+    sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    sassijsLine2 = new SassijsLine( ' :font-size 13px', '  ', 16 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    sassijsLine3 = new SassijsLine( '  :color purple', '  ', 17 );
+    sassijsNode3 = sassijsLine3.determineNode();
+    sassijsNode1.appendChild( sassijsNode3 );
+    equals( sassijsNode1.getCss(), '#column.left { font-size: 13px; color: purple }' );
   });
-*/
+
+  test( "SassijTreeNodeRule should render subchild rules and attributes", function(){
+    sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    sassijsLine2 = new SassijsLine( ' :font-size 13px', '  ', 16 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    sassijsLine3 = new SassijsLine( '  :color purple', '  ', 17 );
+    sassijsNode3 = sassijsLine3.determineNode();
+    sassijsNode1.appendChild( sassijsNode3 );
+    sassijsLine4 = new SassijsLine( '    span.selected ', '  ', 18 );
+    sassijsNode4 = sassijsLine4.determineNode();
+    sassijsLine5 = new SassijsLine( ' border: none', '  ', 19 );
+    sassijsNode5 = sassijsLine5.determineNode();
+    sassijsNode4.appendChild( sassijsNode5 );
+    sassijsNode1.appendChild( sassijsNode4 );
+    
+    // First let's just verify the tree structure that we expect.
+    equals( sassijsNode1.getLine().getSyntax(), "#column.left" );
+    equals( sassijsNode1.getChildren()[0].getLine().getSyntax(), ":font-size 13px" );
+    equals( sassijsNode1.getChildren()[1].getLine().getSyntax(), ":color purple" );
+    equals( sassijsNode1.getChildren()[2].getLine().getSyntax(), "span.selected" );
+    equals( sassijsNode1.getChildren()[2].getChildren()[0].getLine().getSyntax(), "border: none" );
+
+    equals( sassijsNode1.getCss().join( '\n' ), "#column.left { font-size: 13px; color: purple }\n#column.left span.selected { border: none }" );
+  });
   
     </script>
 
