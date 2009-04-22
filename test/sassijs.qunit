@@ -15,11 +15,21 @@
   testTemplate = function(){
     return $( '#test-template' ).html();
   }
+
+  testResult = function(){
+    return $( '#test-result' ).html();
+  }
   
   test( "should load a template and still contain it", function(){
     sassijs = new Sassijs( testTemplate() );
     equals( sassijs.getTemplate(), testTemplate() );
   });
+
+  test( "should write CSS into a style element", function(){
+    sassijs = new Sassijs( testTemplate() );
+    equals( sassijs.getStyleElement(), '<style type="text/css"><!--\n' + testResult() + '\n--></style>' );
+  });
+
 
 /*
   beforeEach = function(){
@@ -96,6 +106,13 @@ body
   #container.bottom
     :background brown
 </div>
+    <div id="test-result" style="display:none">body { font: Arial; background: blue; }
+#page { width: 700px; height: 100; }
+#page #header { height: 300px; }
+#page #header h1 { font-size: 50px; color: blue; }
+#content.user.show #container.top #column.left { width: 100px; }
+#content.user.show #container.top #column.right { width: 600px; }
+#content.user.show #container.bottom { background: brown; }</div>
 
   </body>
 </html>

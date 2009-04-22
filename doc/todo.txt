@@ -1,9 +1,11 @@
 * Variable replacement.
 
-* Output CSS
+* Expression evaluation for all formats.
 
-* Write into file.
-
-* Pick up script tag.
+* Mixins.
 
 * Return expression values into the original format.  For example, if only pixels are used, return size to pixels.  Currently forces everything into points.
+
+* Lazy-load all stuff that gets parsed more than once.
+
+* Cross-browser fixes.

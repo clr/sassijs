@@ -18,7 +18,8 @@ libraries = function(){
     'sassijs/expression',
     'sassijs/file',
     'sassijs/line',
-    'sassijs/tree'
+    'sassijs/tree',
+    'autoloader'
   ];
 };
 
