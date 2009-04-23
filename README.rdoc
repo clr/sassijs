@@ -2,6 +2,11 @@ We have SASSIJS!
 
 Syntactically Awesome Style Sheets + In + JavaScript => SASSIJS
 
+BREAK FREE FROM CSS!!!
+
+You can now use SASS instead of CSS in your web pages.  For a full description of SASS, see the documentation here:
+<a href="http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html">http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html</a> but ignore the installation instructions.
+
 == Usage
 
 Very easy.  Just link add a script element pointing to the library, and a link element pointing to the sass template.  For example:
