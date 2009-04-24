@@ -9,3 +9,5 @@
 * Lazy-load all stuff that gets parsed more than once.
 
 * Cross-browser fixes.
+
+* Set up qUnit for template -> css comparisons.
