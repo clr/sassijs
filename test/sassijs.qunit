@@ -29,56 +29,11 @@
     sassijs = new Sassijs( testTemplate() );
     equals( sassijs.getStyleElement(), '<style type="text/css"><!--\n' + testResult() + '\n--></style>' );
   });
-
-
-/*
-  beforeEach = function(){
-    testString = "this is a test string for the string scanner";
-    stringScanner = new StringScanner( testString );
-  }
-  
-  test( "should be able to load an external file './temlates/basic.sass'", function(){
-    sassijs = new SassijsFile( )beforeEach();
-    equals( stringScanner.original, testString );
-  });
-
-  test( "stringScanner.original should match a Regex", function(){
-    beforeEach();
-    equals( stringScanner.scan( /\w+/ ), "this" );
-  });
-
-  test( "stringScanner.original should match a String", function(){
-    beforeEach();
-    equals( stringScanner.scan( 'this' ), "this" );
-  });
-
-  test( "stringScanner.getCurrent should be the remainder after the match", function(){
-    beforeEach();
-    stringScanner.scan( 'test' );
-    equals( stringScanner.getCurrent(), " string for the string scanner" );
-  });
-
-  test( "stringScanner.original should match a String, then match the same String again, and then match a different String after the second one", function(){
-    beforeEach();
-    equals( stringScanner.scan( 'string' ), "string" );
-    equals( stringScanner.scan( 'string' ), "string" );
-    equals( stringScanner.scan( 'scanner' ), "scanner" );
-  });
-
-  test( "stringScanner.original should match a String, then match the same String again, and then not find a different String occuring before the second one", function(){
-    beforeEach();
-    equals( stringScanner.scan( 'string' ), "string" );
-    equals( stringScanner.scan( 'string' ), "string" );
-    equals( stringScanner.scan( 'the' ), false );
-  });
-*/
   
     </script>
 
     <h1></h1>
-    <h2 id="banner">
-      <select id='test_select'></select>
-    </h2>
+    <h2 id="banner"></h2>
     <ol id="tests"></ol>
     <div id="results"></div>
     <div id="main"></div>        

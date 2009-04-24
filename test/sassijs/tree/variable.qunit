@@ -22,9 +22,7 @@
  
     </script>
     <h1></h1>
-    <h2 id="banner">
-      <select id='test_select'></select>
-    </h2>
+    <h2 id="banner"></h2>
     <ol id="tests"></ol>
     <div id="results"></div>
     <div id="main"></div>

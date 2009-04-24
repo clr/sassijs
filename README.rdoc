@@ -14,6 +14,12 @@ Very easy.  Just link add a script element pointing to the library, and a link e
   <script src="./sassijs.js" type="text/javascript"></script> 
   <link href="./main.sass" type="text/sass" />
 
+== Tests
+
+Had to twist qUnit to get the testing framework that I wanted, because I needed to be able to run individual unit tests.  You can access the test suite at:
+
+.../sassijs/test/index.html
+
 == Status
 
 This software is currently at version 0.437, which is alpha-quality.  When it hits 1.0, it will be feature complete with the SASS specifications that make sense outside of Ruby, and it will be cross-browser compatible up to jquery's standards.

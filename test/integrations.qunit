@@ -6,17 +6,22 @@
     <script language="javascript" src="testrunner.js" type="text/javascript"></script>
     <script language="javascript" src="testnavigation.js" type="text/javascript"></script>
     <link media="screen" href="testsuite.css" type="text/css" rel="stylesheet"/>    
-    <link href="./templates/basic.sass" type="text/sass" />    
-    <link href="./templates/alt.sass" type="text/sass" />    
     <script language="javascript" src="testsetup.js" type="text/javascript"></script>
   </head>
   <body>
     <script language="javascript" type="text/javascript">
 
-  module( "Autoloader Tests");
+  template = document.location.toString().split( "#" )[1];
+  
+  module( "Integration Test for " + template + " Template");
 
-  test( "should find links for sass files", function(){
-    same( SassijsAutoloader.getTemplates(), [ "./templates/basic.sass", "./templates/alt.sass" ] );
+  test( "should compare sass template with corresponding css file", function(){
+    sassijs = new SassijsFile( '../templates/' + template + '.sass', false );
+    var css = $.ajax({
+      url: '../templates/' + template + '.css',
+      async: false
+    }).responseText;
+    equals( sassijs.getCss(), css );
   });
   
     </script>
