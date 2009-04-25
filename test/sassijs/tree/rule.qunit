@@ -24,6 +24,32 @@
     equals( sassijsNode1.getCss(), '#column.left' );
   });
  
+  test( "SassijTreeNodeRule should split if written in compressed format", function(){
+    sassijsLine0 = new SassijsLine( '  #container', '  ', 15 );
+    sassijsNode0 = sassijsLine0.determineNode();
+    sassijsLine1 = new SassijsLine( '    #column.left, #column.right', '  ', 16 );
+    sassijsNode1 = sassijsLine1.determineNode();
+    sassijsNode0.appendChild( sassijsNode1 );
+    // Need a child node to which the rule prepends.
+    sassijsLine2 = new SassijsLine( '      color: grey', '  ', 17 );
+    sassijsNode2 = sassijsLine2.determineNode();
+    sassijsNode1.appendChild( sassijsNode2 );
+    
+    // Check tree before the split.
+    equals( sassijsNode0.getLine().getSyntax(), "#container" );
+    equals( sassijsNode0.getChildren()[0].getLine().getSyntax(), "#column.left, #column.right" );
+    equals( sassijsNode0.getChildren()[0].getChildren()[0].getLine().getSyntax(), "color: grey" );
+    
+    sassijsNode1.determineMitosis();
+    
+    // Now check tree again to make sure we didn't introduce any mutations.
+    equals( sassijsNode0.getLine().getSyntax(), "#container" );
+    equals( sassijsNode0.getChildren()[0].getLine().getSyntax(), "#column.left" );
+    equals( sassijsNode0.getChildren()[0].getChildren()[0].getLine().getSyntax(), "color: grey" );
+    equals( sassijsNode0.getChildren()[1].getLine().getSyntax(), "#column.right" );
+    equals( sassijsNode0.getChildren()[1].getChildren()[0].getLine().getSyntax(), "color: grey" );
+  });
+ 
 /*
   test( "SassijTreeNodeRule should render subchild rules", function(){
     sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );

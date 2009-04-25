@@ -79,7 +79,7 @@ $( function(){
   $( [ '' ].concat( templates() ) ).each( function( i, test ){ 
     var option = $( '<option>'+test+'</option>' );
     $( '#integration_test_select' ).append( option );
-    $( option ).data( 'url', document.location.toString().split( "sassijs\/test", 1 )[0] + 'sassijs/test/integrations.qunit#' + test );
+    $( option ).data( 'url', document.location.toString().split( "sassijs\/test", 1 )[0] + 'sassijs/test/integrations.qunit?' + test );
   });
   $( '#integration_test_select' ).change( function(){
     var url = $( $( '#integration_test_select option:selected' )[0] ).data( 'url' );
