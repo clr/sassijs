@@ -1,3 +1,13 @@
+/*
+ * sassijs 0.4.71 - Syntactically Awesome StyleSheets in JavaScript
+ *
+ * Copyright (c) 2009 Casey Rosenthal (github.net/clr)
+ * Dual licensed under the MIT (MIT-LICENSE.txt)
+ * and GPL (GPL-LICENSE.txt) licenses.
+ *
+ * $Date: 2009-04-25 Sat Apr 25 15:11:12 -0400 2009 $
+ * $Rev: 1 more than last time $
+ */
 // This file contains various helper methods.
 
 
@@ -112,8 +122,12 @@ Sassijs.method( 'determineTree', function(){
   this.tree = new SassijsTree( this.getTemplate() );
 });
 
+Sassijs.method( 'getCss', function(){
+  return this.getTree().getRoot().getCss().join( '\n' );
+});
+
 Sassijs.method( 'getStyleElement', function(){
-  return '<style type="text/css"><!--\n' + this.getTree().getRoot().getCss().join( '\n' ) + '\n--></style>';
+  return '<style type="text/css"><!--\n' + this.getCss() + '\n--></style>';
 });
 
 Sassijs.method( 'writeToDocument', function(){
@@ -273,6 +287,12 @@ SassijsTreeNode.method( 'getChildren', function(){
   return this.children;
 });
 
+// It's an odd kind of tree, but we can only traverse out,
+// and these poor children will never know their parents.
+SassijsTreeNode.method( 'hasChildren', function(){
+  return( this.children.length > 0 );
+});
+
 SassijsTreeNode.method( 'getLine', function(){
   return this.line;
 });
@@ -298,25 +318,10 @@ SassijsTreeNode.method( 'getLastChild', function() {
 SassijsTreeNode.method( 'getSpecies', function(){
   return this.species;
 });
-
-SassijsTreeNode.method( 'toS', function() {
-  var result = "";
-  for( child in this.getChildren() ){
-    if( child.isType( AttrNode ) ){
-      throw( new SassijError( 'Attributes aren\'t allowed at the root of a document.', child.line ) );
-    } else {
-      //    result << "#{child.to_s(1)}" + (@style == :compressed ? '' : "\n")
-      // need to add a @style indicator at some point
-      result += child.toS( 1 );
-    }
-  }
-      // @style == :compressed ? result+"\n" : result[0...-1]
-  return result;
-});
   
-  // This method should be overridden by subclasses to return an error message
-  // if the given child node is invalid,
-  // and false or nil otherwise.
+// This method should be overridden by subclasses to return an error message
+// if the given child node is invalid,
+// and false or nil otherwise.
 SassijsTreeNode.method( 'isInvalidChild', function( child ){
   return false;
 });
@@ -350,7 +355,18 @@ SassijsTreeNode.method( 'getCss', function(){
     for( var i = 0; i < ruleChildren.length; i++ ){
       prefixRule = this.getLine().getSyntax();
       if( prefixRule.length > 0 ){
-        ruleChildren[ i ] = prefixRule + " " + ruleChildren[ i ];
+        // Sometimes CSS rules are compressed like 'a span, a div' and we
+        // need to expand those children here and prepend the parent to 
+        // both sub-rules, span and div in the above example.
+        if( ruleChildren[ i ].indexOf( ',' ) ){
+          ruleChildrenParts = ruleChildren[ i ].split( ', ' );
+          for( var j = 0; j < ruleChildrenParts.length; j++ ){
+            ruleChildrenParts[ j ] = prefixRule + " " + ruleChildrenParts[ j ];
+          }
+          ruleChildren[ i ] = ruleChildrenParts.join( ', ' );
+        } else {
+          ruleChildren[ i ] = prefixRule + " " + ruleChildren[ i ];
+        }
       }
     }
     return ruleChildren;
@@ -360,6 +376,14 @@ SassijsTreeNode.method( 'getCss', function(){
   }
 });
 
+
+// There are several cases where the children of a node are compressed
+// in a short-hand.  When this node is a Rule, it needs to have its
+// children duplicated and appended to the split Rule in order to be 
+// uncompressed.
+SassijsTreeNode.method( 'expandChildren', function(){
+  
+});
 SassijsTreeNodeAttribute = function( line ){
   this.children = [];
   this.species = 'attribute';
@@ -415,7 +439,23 @@ SassijsTreeNodeAttribute.method( 'getValue', function(){
 });
 
 SassijsTreeNodeAttribute.method( 'getCss', function(){
-  return this.getKey() + ": " + this.getValue() + ";";
+  // If an Attribute node has children, then those children have
+  // to be Attribute nodes as well, because that means that this
+  // node is a family definition of attributes, like font-size, 
+  // font-weight, font-style, etc.
+  if( this.hasChildren() ){
+    var attributeChildren = [];
+    for( var i = 0; i < this.getChildren().length; i++ ){
+      var child = this.getChildren()[ i ];
+      if( child.getSpecies() != 'attribute' ){
+        // Raise error.
+      }
+      attributeChildren.push( this.getKey() + "-" + child.getKey() + ": " + child.getValue() + ";" );
+    }
+    return attributeChildren.join( ' ' );
+  } else {
+    return this.getKey() + ": " + this.getValue() + ";";
+  }
 });
 
 SassijsTreeNodeComment = function( line ){
@@ -484,9 +524,8 @@ SassijsTreeNodeRule = function( line ){
 };
 
 SassijsTreeNodeRule.inherits( SassijsTreeNode );
-/*
 
-SassijsTreeNodeRule.method( 'getCss', function(){
+SassijsTreeNodeRule.method( 'determineMitosis', function(){
   var css = '';
   var attributes = [];
   for( var i = 0; i < this.getChildren().length; i++ ){
@@ -504,6 +543,7 @@ SassijsTreeNodeRule.method( 'getCss', function(){
   }
 });
 
+/*
 SassijsTreeNodeRule.method( 'getCss', function(){
   var css = '';
   var attributes = [];

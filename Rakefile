@@ -24,11 +24,27 @@ def all_files
   ].collect{ |f| f + '.js' }
 end
 
+def license
+  return <<-LICENSE
+/*
+ * sassijs 0.4.71 - Syntactically Awesome StyleSheets in JavaScript
+ *
+ * Copyright (c) 2009 Casey Rosenthal (github.net/clr)
+ * Dual licensed under the MIT (MIT-LICENSE.txt)
+ * and GPL (GPL-LICENSE.txt) licenses.
+ *
+ * $Date: #{ Date.today } #{ Time.now } $
+ * $Rev: 1 more than last time $
+ */
+ 
+LICENSE
+end
+
 namespace :javascript do
 
   desc "Concatenate the files together."
   task :join do
-    all_scripts = ''
+    all_scripts = license
     all_files.each do |file|
       all_scripts << File.read( File.join( 'lib', file ) )
     end
@@ -41,5 +57,6 @@ namespace :javascript do
   end
 
 end
+
 
 

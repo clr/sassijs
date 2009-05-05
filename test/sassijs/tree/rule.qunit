@@ -24,6 +24,7 @@
     equals( sassijsNode1.getCss(), '#column.left' );
   });
  
+ /* Don't think I need this anymore.
   test( "SassijTreeNodeRule should split if written in compressed format", function(){
     sassijsLine0 = new SassijsLine( '  #container', '  ', 15 );
     sassijsNode0 = sassijsLine0.determineNode();
@@ -50,7 +51,6 @@
     equals( sassijsNode0.getChildren()[1].getChildren()[0].getLine().getSyntax(), "color: grey" );
   });
  
-/*
   test( "SassijTreeNodeRule should render subchild rules", function(){
     sassijsLine1 = new SassijsLine( '    #column.left', '  ', 15 );
     sassijsNode1 = sassijsLine1.determineNode();

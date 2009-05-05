@@ -74,6 +74,33 @@
     equals( tree.getCss().join( '\n' ), testResult() );
   });
 
+  test( "should get and set variables associated with this tree", function(){
+    scriptSassijs = new SassijsFile( '../templates/script.sass', false );
+    tree = scriptSassijs.getTree();
+    tree.setVariable( 'first', 0 ).setVariable( 'second', 1 );
+    equals( tree.getVariable( 'first' ), 0 );
+    equals( tree.getVariable( 'second' ), 1 );
+  });
+  
+  test( "should find variables and store them in the tree's variable hash", function(){
+    scriptSassijs = new SassijsFile( '../templates/script.sass', false );
+    tree = scriptSassijs.getTree();
+    equals( tree.getVariable( 'width' ), "10em + 20" );
+    equals( tree.getVariable( 'color' ), "#00ff98" );
+    equals( tree.getVariable( 'main_text' ), "#ffa" );
+    equals( tree.getVariable( 'num' ), "10" );
+    equals( tree.getVariable( 'dec' ), "10.2" );
+    equals( tree.getVariable( 'dec_0' ), "99.0" );
+    equals( tree.getVariable( 'neg' ), "-10" );
+    equals( tree.getVariable( 'esc' ), "10\"+12\"" );
+    equals( tree.getVariable( 'str' ), "Hello!" );
+    equals( tree.getVariable( 'qstr' ), "Quo\"ted\"!" );
+    equals( tree.getVariable( 'hstr' ), "Hyph-en!" );
+    equals( tree.getVariable( 'concat' ), "#{5 + 4} hi there" );
+    equals( tree.getVariable( 'percent' ), "11%" );
+    equals( tree.getVariable( 'complex' ), "1px/1em" );
+  });
+
     </script>
     <h1></h1>
     <h2 id="banner"></h2>
