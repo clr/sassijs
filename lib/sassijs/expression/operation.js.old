@@ -1,9 +1,0 @@
-SassijsExpressionOperation = function( unitA, operation, unitB ){
-  this.unitA = unitA;
-  this.operation = operation;
-  this.unitB = unitB;
-};
-
-SassijsExpressionOperation.method( 'getValue', function(){
-  return( eval( [ this.unitA, this.operation, this.unitB ].join( " " ) ) );
-});
