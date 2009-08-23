@@ -39,15 +39,22 @@ SassijsTreeNodeAttribute.method( 'getKey', function(){
 SassijsTreeNodeAttribute.method( 'getValue', function(){
   // The character that designates that an attribute should be assigned 
   // to a SassScript expression.
+  var evaluationChar = '=';
   var variableChar = '!';
 
   // Lazy load the value.
   if( this.value != null ){
     return this.value;
   }
-  if( this.getParts()[2] == expressionChar ){
-  // Variables are for evaluation.
-    this.value = tree.getKey( ); 
+  if( this.getParts()[2] == evaluationChar ){
+  // Variables and expressions need evaluation.
+    if( this.getParts()[3][0] == variableChar ){
+      var treeKey = this.getParts()[3].slice( 1 );
+console.log( treeKey );
+      this.value = this.tree.getVariable( treeKey ); 
+    } else {
+      this.value = "EXPRESSION";
+    }
   } else {
     this.value = this.getParts()[3];
   }

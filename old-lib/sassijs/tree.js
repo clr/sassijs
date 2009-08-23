@@ -1,13 +1,12 @@
 // This class takes a sass template and breaks it down into children nodes.
 SassijsTree = function( template ){
-  this.template = template.replace( /\r|\n|\r\n/g, "\n");
-  this.determineTab();
-  var rootLine = new SassijsLine( '', this.getTab(), 0 );
-  this.root = rootLine.determineNode();
-  this.variables = {};
-  this.determineLines();
-  this.determineNodes();
-  this.determineVariables();
+//  this.template = template.replace( /\r|\n|\r\n/g, "\n");
+//  this.determineTab();
+//  var rootLine = new SassijsLine( '', this.getTab(), 0 );
+//  this.root = rootLine.determineNode();
+//  this.variables = {};
+//  this.determineLines();
+//  this.determineNodes();
 }
 
 SassijsTree.method( 'getTab', function(){
@@ -45,19 +44,42 @@ SassijsTree.method( 'setVariable', function( hashName, newValue ){
 });
 
 
-// The tab is the form of indentation, which can be tabs or spaces,
-// but not both.
-SassijsTree.method( 'determineTab', function(){
-  var lines = this.getTemplateLines();
+/*
+ * The tab is the form of indentation, which can be tabs or spaces,
+ * or any consistant combination thereof.
+ * 
+ * @param {String} template
+ * @return {String} tab
+ */
+SassijsTree.method( 'determineTab', function( template ){
+  var lines = this.determineTemplateLines( template );
   for( var i = 0; i < lines.length; i++ ){
     var firstTab = lines[ i ].match( /^(\s|\t)+/ );
     if( firstTab ){
-      this.setTab( firstTab[0] );
-      break;
+      return firstTab[0];
     }
   }
 });
 
+/*
+ * Line breaks [and soon semi-colons] in the template text 
+ * correspond to potential nodes in the Sassijs tree.
+ *
+ * @param {String} template
+ * @return {String} lines
+ */
+SassijsTree.method( 'determineTemplateLines', function( template ){
+console.log( template );
+  return template.split( /\r|\n|\r\n/ );
+});
+
+/*
+ * We preprocess the template text as SassitjsLine objects first.
+ * We will convert them into SassijsNodes later.
+ *
+ * @param {String} template
+ * @return {Array} array of SassijsLines
+ */
 // These are just the individual lines of the syntax template.  The
 // lines themselves determine their own Node Species before being 
 // converted to Nodes.
@@ -86,7 +108,7 @@ SassijsTree.method( 'determineNodes', function(){
       // of a document.  Not sure if this is how we always want to do it, but it 
       // makes sense for Jessie.
       if( newNode.getSpecies() == 'variable' ){
-        this.setVariable( node.getKey(), node.getValue() );
+        this.setVariable( newNode.getKey(), newNode.getValue() );
       }
 
       // Comments don't return anything that we want in our tree.

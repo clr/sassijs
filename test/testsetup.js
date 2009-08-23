@@ -3,6 +3,7 @@ libraries = function(){
     'pepper',
     'sassijs',
     'helper',
+    'node',
     'string-scanner',
     'sassijs/error',
     'sassijs/environment',
@@ -65,7 +66,7 @@ $( function(){
   $( [ '' ].concat( libraries() ) ).each( function( i, test ){ 
     var option = $( '<option>'+test+'</option>' );
     $( '#unit_test_select' ).append( option );
-    $( option ).data( 'url', document.location.toString().split( "sassijs\/test", 1 )[0] + 'sassijs/test/' + test + '.qunit' );
+    $( option ).data( 'url', document.location.toString().split( "\/test", 1 )[0] + '/test/' + test + '.qunit' );
   });
   $( '#unit_test_select' ).change( function(){
     var url = $( $( '#unit_test_select option:selected' )[0] ).data( 'url' );
@@ -79,7 +80,7 @@ $( function(){
   $( [ '' ].concat( templates() ) ).each( function( i, test ){ 
     var option = $( '<option>'+test+'</option>' );
     $( '#integration_test_select' ).append( option );
-    $( option ).data( 'url', document.location.toString().split( "sassijs\/test", 1 )[0] + 'sassijs/test/integrations.qunit?' + test );
+    $( option ).data( 'url', document.location.toString().split( "\/test", 1 )[0] + '/test/integrations.qunit?' + test );
   });
   $( '#integration_test_select' ).change( function(){
     var url = $( $( '#integration_test_select option:selected' )[0] ).data( 'url' );

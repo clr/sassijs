@@ -1,5 +1,8 @@
 SassijsTreeNode = function( line, newOptions ){ 
-  this.children = [];
+  this.nodeName = null;
+  this.nodeValue = null;
+  this.nodeType = null;
+
   if( newOptions ){
     this.options = newOptions;
   } else {

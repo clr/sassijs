@@ -4,8 +4,6 @@ SassijsLine = function( string, tab, lineNumber ){
   this.lineNumber = lineNumber;
   this.syntax = '';
   this.tabCount = 0;
-  // A reference to our context.
-//  this.sassijs = sassijs;
   
   // Count the tabs.
   findTab = new RegExp( "^" + tab );
@@ -22,10 +20,6 @@ SassijsLine = function( string, tab, lineNumber ){
 SassijsLine.method( 'getSyntax', function(){
   return this.syntax;
 });
-
-//SassijsLine.method( 'getSassijs', function(){
-//  return this.sassijs;
-//});
 
 SassijsLine.method( 'getTabCount', function(){
   return this.tabCount;
